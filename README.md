@@ -1,6 +1,6 @@
-# AWS-Project-2-StaticWebsitee
+# AWS-Project-2-StaticWebsite
 
-## Description
+## Intro
 
 This is a repository that will contain code and steps for hosting a website using AWS S3.
 
@@ -19,7 +19,7 @@ The password for this IAM user is stored in Michael's Dashlane account.
 
 I am working within the ap-southeast-2 (Sydney) region. 
 
-## Steps
+## Host a simple website on AWS S3
 
 ### Create an S3 bucket to host the website
 
@@ -73,9 +73,17 @@ The simple website file 'index.html' was added to the S3 bucket. This simple web
 4. For the "Index document", enter index.html.
 5. Click "Save changes".
 
+**Access Your Website - get the Website URL:**
+
+1. Go back to the "Properties" tab.
+2. In the "Static website hosting" section, you will see the "Bucket website endpoint".
+3. In my case, the URL is http://aws-project-2-staticwebsite.s3-website-ap-southeast-2.amazonaws.com
+4. Open the provided URL in a web browser to see the "Hello World" page.
+
+## Add user/login capability to access a private webpage
 
 
-
+## Update the website to use a BootStrap template
 
 ## Notes
 

@@ -122,6 +122,8 @@ For the next steps, this Youtube video was very helpful: https://www.youtube.com
 
 > :information_source: **Note that I did not receive an email when I used the same email for the user as used for the user pool email setup.**
 
+> :information_source: **Note that 'login.html.legacy' is a previous attempt to create a login interface. It didn't work because it couldn't find the 'amazon-cognito-identity.min.js' script. I think ChatGPT probably made this up. I have uploaded the code still in case it might be useful for something else.**
+
 ## Access data from DynamoDB table on secure webpage
 
 ## Update the website to use a BootStrap template

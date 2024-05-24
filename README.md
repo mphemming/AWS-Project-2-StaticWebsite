@@ -82,6 +82,61 @@ The simple website file 'index.html' was added to the S3 bucket. This simple web
 
 ## Add user/login capability to access a private webpage
 
+**Create a User Pool using AWS Cognito**
+
+1. create a user pool via the Cognito console with the following settings:
+
+* Users can sign-in using either a username or email address
+* The minimum password length is 8 characters, and must contain at least 1 number, and at least one upper and lower case letter.
+* The temporary password expires after 7 days
+* no multi-factor authentication required (although this is an option if better security needed)
+* "forgot your password" option available to users, delivered via email
+* disable self-registration option so that only a select few can access information (organised by website admin)
+* Allow Cognito to automatically send email messages to verify and confirm (recommended)
+* the following attributes are required when a new user is created: birthdate, address, given_name, family_name, phone_number, preferred_username. There is also an option to create custom attributes but I left this blank for now.
+* send email with Cognito, but replies are forwarded to my personal email address (temporary)
+* user pool name 'StaticWebsite'
+* Public app client created called 'StaticWebsite'
+
+2. Upload the 'login.html' script to the same S3 bucket 'aws-project-2-staticwebsite' that contains 'index.html'. You will need to include the user pool id (found when clicking on the newly-created 'StaticWebsite' user pool), and the app client id (bottom under 'app-integration').
+3. Update the S3 bucket policy (see instructions in section above) to restrict direct acces to the 'index.html' script using the below json snippet:
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::aws-project-2-staticwebsite/login.html"
+        },
+        {
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::aws-project-2-staticwebsite/index.html",
+            "Condition": {
+                "StringNotLike": {
+                    "aws:Referer": [
+                        "http://http://aws-project-2-staticwebsite.s3.ap-southeast-2.amazonaws.com/login.html",
+                        "https://https://aws-project-2-staticwebsite.s3.ap-southeast-2.amazonaws.com/login.html"
+                    ]
+                }
+            }
+        }
+    ]
+}
+```
+
+Make sure to include the correct URLs and resource. The top statement of this json code allows access to 'login.html' for everyone. The bottom half is a deny statement that prevents access to index.html unless the referrer is 'login.html'. If someone tries to directly access 'index.html' without going through 'login.html', access will be denied.
+
+
+
+
+
+
+
 ## Access data from DynamoDB table on secure webpage
 
 ## Update the website to use a BootStrap template

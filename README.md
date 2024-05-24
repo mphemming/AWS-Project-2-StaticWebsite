@@ -117,7 +117,7 @@ For the next steps, this Youtube video was very helpful: https://www.youtube.com
 * select 'OpenID' and 'Email' for the OpenID connect scopes
 * Add a domain name for the hosted UI. You can call it anything, but it has to be unique. 
 4. After saving changes, click on the 'view hosted UI' button to test the login interface.
-5. Copy the URL for this hosted UI into the three html scripts uploaded in the S3 bucket, making sure to change some parts of the URL for 'logged_in.html'. 
+5. Copy the URL for this hosted UI into the three html scripts uploaded in the S3 bucket, making sure to change some parts of the URL for 'logged_in.html'. **I have removed the app client ID in the scripts available in this repository so you will need to add your own ID to the URL link.**
 6. create a user to test the login mechanism. You do this by going to the Cognito user pool and then click on 'create user'. An email will be sent with the username and temporary password, and then once logged in the user will have the opportunity to input required info and change the password. 
 
 > :information_source: **Note that I did not receive an email when I used the same email for the user as used for the user pool email setup.**

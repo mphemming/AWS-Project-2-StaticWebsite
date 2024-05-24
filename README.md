@@ -37,6 +37,9 @@ The simple website file 'index.html' was added to the S3 bucket. This simple web
 4. For the "Index document", enter index.html.
 5. Click "Save changes".
 
+
+:information_source: **Note that 'index.html' used here was renamed to 'index.html.legacy' in order to setup a new 'index.html' in the next section.**
+
 **Turn off 'Block public access' (if enabled when creating the S3 bucket):**
 
 1. Click on the "Permissions" tab in your S3 bucket.
@@ -80,6 +83,10 @@ The simple website file 'index.html' was added to the S3 bucket. This simple web
 3. In my case, the URL is http://aws-project-2-staticwebsite.s3-website-ap-southeast-2.amazonaws.com
 4. Open the provided URL in a web browser to see the "Hello World" page.
 
+
+> :information_source: **Note that 'index.html' used here was renamed to 'index.html.legacy' in order to setup a new 'index.html' in the next section.**
+
+
 ## Add user/login capability to access a private webpage
 
 **Create a User Pool using AWS Cognito**
@@ -98,44 +105,18 @@ The simple website file 'index.html' was added to the S3 bucket. This simple web
 * user pool name 'StaticWebsite'
 * Public app client created called 'StaticWebsite'
 
-2. Upload the 'login.html' script to the same S3 bucket 'aws-project-2-staticwebsite' that contains 'index.html'. You will need to include the user pool id (found when clicking on the newly-created 'StaticWebsite' user pool), and the app client id (bottom under 'app-integration').
-3. Update the S3 bucket policy (see instructions in section above) to restrict direct acces to the 'index.html' script using the below json snippet:
+For the next steps, this Youtube video was very helpful: https://www.youtube.com/watch?v=8a0vtkWJIA4
 
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::aws-project-2-staticwebsite/login.html"
-        },
-        {
-            "Effect": "Deny",
-            "Principal": "*",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::aws-project-2-staticwebsite/index.html",
-            "Condition": {
-                "StringNotLike": {
-                    "aws:Referer": [
-                        "http://http://aws-project-2-staticwebsite.s3.ap-southeast-2.amazonaws.com/login.html",
-                        "https://https://aws-project-2-staticwebsite.s3.ap-southeast-2.amazonaws.com/login.html"
-                    ]
-                }
-            }
-        }
-    ]
-}
-```
-
-Make sure to include the correct URLs and resource. The top statement of this json code allows access to 'login.html' for everyone. The bottom half is a deny statement that prevents access to index.html unless the referrer is 'login.html'. If someone tries to directly access 'index.html' without going through 'login.html', access will be denied.
-
-
-
-
-
-
+2. Upload 3 html scripts to the same S3 bucket 'aws-project-2-staticwebsite': 'index.html', 'logged_in.html', and 'logged_out.html'. These are found in this repo and all 3 will be used for setting this up.
+3. I used the Hosted UI for the login interface. To set this up you will need to do the following:
+* Navigate to the App client 'StaticWebsite'
+* Edit the 'Hosted UI' section to include a callback URL as ```https://aws-project-2-staticwebsite.s3.ap-southeast-2.amazonaws.com/logged_in.html``` and the allowed sign-out URL as ```https://aws-project-2-staticwebsite.s3.ap-southeast-2.amazonaws.com/logged_out.html```.
+* Select 'Cognito user pool' as the identity providers
+* Select 'Authorization code grant' for OAuth 2.0 grant types
+* select 'OpenID' and 'Email' for the OpenID connect scopes
+4. After saving changes, click on the 'view hosted UI' button to test the login interface.
+5. Copy the URL for this hosted UI into the three html scripts uploaded in the S3 bucket, making sure to change some parts of the URL for 'logged_in.html'. 
+6. create a user to test the login mechanism. You do this by going to the Cognito user pool and then click on 'create user'. An email will be sent with the username and temporary password, and then once logged in the user will have the opportunity to input required info and change the password. Note that I did not receive an email when I used the same email for the user as used for the user pool email setup. 
 
 ## Access data from DynamoDB table on secure webpage
 
@@ -144,5 +125,6 @@ Make sure to include the correct URLs and resource. The top statement of this js
 ## Notes
 
 The website URL might not work at first relating to http vs https. Changing the URL to 'https' usually works. 
+For Cognito, it is better to not use the same email address for the testing user as used when creating the user pool
 
 

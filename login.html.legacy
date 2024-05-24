@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/amazon-cognito-identity-js/5.0.3/amazon-cognito-identity.min.js"></script>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="login-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+        <button type="button" onclick="login()">Login</button>
+        <p id="error-message" style="color: red; display: none;"></p> <!-- Error message element -->
+    </form>
+    <script>
+        var poolData = {
+            UserPoolId: 'user-pool-id', // Your user pool id here
+            ClientId: 'client-id' // Your client id here
+        };
+        var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+
+        function login() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
+                Username: username,
+                Password: password,
+            });
+
+            var userData = {
+                Username: username,
+                Pool: userPool
+            };
+
+            var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+            cognitoUser.authenticateUser(authenticationDetails, {
+                onSuccess: function (result) {
+                    alert("Login successful!");
+                    // Redirect to your protected page
+                    window.location.href = "index.html";
+                },
+
+                onFailure: function (err) {
+                    var errorMessage = err.message || JSON.stringify(err);
+                    document.getElementById("error-message").textContent = errorMessage;
+                    document.getElementById("error-message").style.display = "block"; // Display error message
+                },
+            });
+        }
+    </script>
+</body>
+</html>

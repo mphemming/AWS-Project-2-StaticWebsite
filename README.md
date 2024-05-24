@@ -19,6 +19,66 @@ The password for this IAM user is stored in Michael's Dashlane account.
 
 I am working within the ap-southeast-2 (Sydney) region. 
 
-### S3 Buckets
+## Steps
 
-An S3 bucket was created with the standard option within the ap-southeast-2 (Sydney) region spread across >= 3 AZs. This bucket is called 'aws-project-2-StaticWebsite'.
+### Create an S3 bucket to host the website
+
+An S3 bucket was created with the standard option within the ap-southeast-2 (Sydney) region spread across >= 3 AZs. This bucket is called 'aws-project-2-staticwebsite'.
+
+The simple website file 'index.html' was added to the S3 bucket. This simple website displays 'Hello World'. 
+
+### Configure the S3 Bucket for Static Website Hosting
+
+**Enable Static Website Hosting:**
+
+1. Click on the "Properties" tab in your S3 bucket.
+2. Scroll down to the "Static website hosting" section and click "Edit".
+3. Select "Enable".
+4. For the "Index document", enter index.html.
+5. Click "Save changes".
+
+**Turn off 'Block public access' (if enabled when creating the S3 bucket):**
+
+1. Click on the "Permissions" tab in your S3 bucket.
+2. Click on "Block public accessy" and then "Edit".
+3. Uncheck the box for 'Bloack _all_ public access.
+4. Click "Save changes".
+
+**Set Bucket Policy for Public Access:**
+
+1. Click on the "Permissions" tab in your S3 bucket.
+2. Click on "Bucket Policy" and then "Edit".
+3. Add the following bucket policy to allow public read access:
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::aws-project-2-staticwebsite/*"
+    }
+  ]
+}
+```
+4. Click "Save changes".
+
+**Enable Static Website Hosting:**
+
+1. Click on the "Properties" tab in your S3 bucket.
+2. Scroll down to the "Static website hosting" section and click "Edit".
+3. Select "Enable".
+4. For the "Index document", enter index.html.
+5. Click "Save changes".
+
+
+
+
+
+## Notes
+
+The website URL might not work at first relating to http vs https. Changing the URL to 'https' usually works. 
+
+

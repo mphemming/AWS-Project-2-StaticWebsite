@@ -82,6 +82,7 @@ The simple website file 'index.html' was added to the S3 bucket. This simple web
 
 ## Add user/login capability to access a private webpage
 
+## Access data from DynamoDB table on secure webpage
 
 ## Update the website to use a BootStrap template
 

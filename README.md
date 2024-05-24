@@ -2,7 +2,7 @@
 
 ## Intro
 
-This is a repository that will contain code and steps for hosting a website using AWS S3.
+This is a repository that will contain code and steps for hosting a simple website using AWS S3, and setting up a login system to access a private webpage.
 
 Project progress can be tracked here: [https://github.com/users/mphemming/projects/2/views/1](https://github.com/users/mphemming/projects/3/views/1)
 
@@ -38,7 +38,7 @@ The simple website file 'index.html' was added to the S3 bucket. This simple web
 5. Click "Save changes".
 
 
-:information_source: **Note that 'index.html' used here was renamed to 'index.html.legacy' in order to setup a new 'index.html' in the next section.**
+:information_source: **Note that 'index.html' used here was renamed to 'index.html.legacy' in this repository in order to setup a new 'index.html' in the next section.**
 
 **Turn off 'Block public access' (if enabled when creating the S3 bucket):**
 
@@ -84,8 +84,9 @@ The simple website file 'index.html' was added to the S3 bucket. This simple web
 4. Open the provided URL in a web browser to see the "Hello World" page.
 
 
-> :information_source: **Note that 'index.html' used here was renamed to 'index.html.legacy' in order to setup a new 'index.html' in the next section.**
+> :information_source: **Note that 'index.html' used here was renamed to 'index.html.legacy' in this repository in order to setup a new 'index.html' in the next section.**
 
+> :information_source: **Note the AWS link in step 3 now directs to the newer index.html described in the section below.**
 
 ## Add user/login capability to access a private webpage
 
@@ -117,15 +118,17 @@ For the next steps, this Youtube video was very helpful: https://www.youtube.com
 * Add a domain name for the hosted UI. You can call it anything, but it has to be unique. 
 4. After saving changes, click on the 'view hosted UI' button to test the login interface.
 5. Copy the URL for this hosted UI into the three html scripts uploaded in the S3 bucket, making sure to change some parts of the URL for 'logged_in.html'. 
-6. create a user to test the login mechanism. You do this by going to the Cognito user pool and then click on 'create user'. An email will be sent with the username and temporary password, and then once logged in the user will have the opportunity to input required info and change the password. Note that I did not receive an email when I used the same email for the user as used for the user pool email setup. 
+6. create a user to test the login mechanism. You do this by going to the Cognito user pool and then click on 'create user'. An email will be sent with the username and temporary password, and then once logged in the user will have the opportunity to input required info and change the password. 
+
+> :information_source: **Note that I did not receive an email when I used the same email for the user as used for the user pool email setup.**
 
 ## Access data from DynamoDB table on secure webpage
 
 ## Update the website to use a BootStrap template
 
-## Notes
+## Other notes
 
-The website URL might not work at first relating to http vs https. Changing the URL to 'https' usually works. 
-For Cognito, it is better to not use the same email address for the testing user as used when creating the user pool
+* The website URL might not work at first relating to http vs https. Changing the URL to 'https' usually works. 
+* For Cognito, it is better to not use the same email address for the testing user as used when creating the user pool
 
 
